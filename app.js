@@ -1,5 +1,5 @@
 const express = require('express');
-const bodyParser = require('body-parser'); 
+
 const {WebClient} = require('@slack/web-api');
 const {createEventAdapter} = require('@slack/events-api');
 
@@ -12,8 +12,7 @@ const app = express();
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const botToken = process.env.BOT_TOKEN;
 
-app.use(bodyParser.urlencoded({extended:true}));
-app.use(bodyParser.json());
+
 const slackEvents = createEventAdapter(slackSigningSecret);
 const slackClient = new WebClient(botToken);
 
