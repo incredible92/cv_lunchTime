@@ -1,3 +1,7 @@
+const express = require('express');
+
+const app = express()
+
 const {WebClient} = require('@slack/web-api');
 const {createEventAdapter} = require('@slack/events-api');
 
@@ -12,7 +16,7 @@ const port = process.env.SLACK_PORT || 3000;
 const slackEvents = createEventAdapter(slackSigningSecret);
 const slackClient = new WebClient(botToken)
 
-aap.get('/', (req, res) => {
+app.get('/', (req, res) => {
 res.send('place your order NOW!!!')
 })
 slackEvents.on('app_mention', (e) => {
