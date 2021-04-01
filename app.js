@@ -10,7 +10,7 @@ dotenv.config();
 
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const botToken = process.env.BOT_TOKEN;
-const port = process.env.SLACK_PORT || 3000;
+const port = process.env.PORT || 3000;
 
 
 const slackEvents = createEventAdapter(slackSigningSecret);
