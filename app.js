@@ -12,7 +12,9 @@ const port = process.env.SLACK_PORT || 3000;
 const slackEvents = createEventAdapter(slackSigningSecret);
 const slackClient = new WebClient(botToken)
 
-
+aap.get('/', (req, res) => {
+res.send('place your order NOW!!!')
+})
 slackEvents.on('app_mention', (e) => {
     console.log(`Got message from villagers ${e.user}: ${e.text}`);
     
