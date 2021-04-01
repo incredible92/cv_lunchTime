@@ -12,7 +12,8 @@ const app = express();
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const botToken = process.env.BOT_TOKEN;
 
-
+app.use(express.urlencoded({extended:true}));
+app.use(express.json());
 const slackEvents = createEventAdapter(slackSigningSecret);
 const slackClient = new WebClient(botToken);
 
