@@ -1,24 +1,34 @@
 const express = require('express');
 
 const {WebClient} = require('@slack/web-api');
+const {MongoClient} = require('mongodb')
 const {createEventAdapter} = require('@slack/events-api');
 
 const dotenv = require('dotenv');
 dotenv.config();
 
+const mongoPass = process.env.MONGO_PASS;
+const mongoUser = process.env.MONGO_USER;
 const port = process.env.PORT || 3000;
+const uri = `mongodb+srv://${MONGO_USER}:${MONGO_PASS}@cluster0.c9ynn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 const app = express();
 
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const botToken = process.env.BOT_TOKEN;
 const slackEvents = createEventAdapter(slackSigningSecret);
 const slackClient = new WebClient(botToken);
+const dbClient = new MongoClient(uri, { useNewUrlParser: true });
 
 app.use('/slack/events', slackEvents.expressMiddleware());
 
 app.get('/', (req, res) => {
 res.send('place your order NOW!!!')
-})
+});
+
+
+dbClient.connect(error => {
+    if (error) console.error(error);
+});
 
 slackEvents.on('app_mention', (e) => {
     console.log(`Got message from villagers ${e.user}: ${e.text}`);
