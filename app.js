@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 const {WebClient} = require('@slack/web-api');
 const {MongoClient} = require('mongodb')
@@ -19,16 +20,29 @@ const slackEvents = createEventAdapter(slackSigningSecret);
 const slackClient = new WebClient(botToken);
 const dbClient = new MongoClient(uri, { useNewUrlParser: true });
 
+const users = {
+    _id: Number,
+    username: 'string',
+    email: 'string',
+    phoneNumber: Number
+}
+
 app.use('/slack/events', slackEvents.expressMiddleware());
 
 app.get('/', (req, res) => {
 res.send('place your order NOW!!!')
 });
 
+mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000 // Timeout after 5s instead of 30s
+  });
 
 dbClient.connect(error => {
     if (error) console.error(error);
 });
+
 
 slackEvents.on('app_mention', (e) => {
     console.log(`Got message from villagers ${e.user}: ${e.text}`);
