@@ -13,18 +13,27 @@ const mongoUser = process.env.MONGO_USER;
 const port = process.env.PORT || 3000;
 const uri = `mongodb+srv://${MONGO_USER}:${MONGO_PASS}@cluster0.c9ynn.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 const app = express();
-const router = express.Router();
+
 
 const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const botToken = process.env.BOT_TOKEN;
 const slackEvents = createEventAdapter(slackSigningSecret);
 const slackClient = new WebClient(botToken);
-const dbClient = new MongoClient(uri, { useNewUrlParser: true });
+
+
+// const dbClient = new MongoClient(uri, { useNewUrlParser: true })
+// .then(() => {
+//     const app = express()
+
+//     app.listen(5000, () => {
+//         console.log("Server has started!")
+//     })
+// });
 
 const users = {
-    _id: Number,
     username: 'string',
     email: 'string',
+    comments: 'string',
     phoneNumber: Number
 }
 
