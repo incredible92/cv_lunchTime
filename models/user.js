@@ -6,18 +6,18 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
     email: "string",
-    body:   String,
+    order:   String,
     date: { 
         type: Date,
         default: Date.now 
         },
     comments: [
         { 
-            body: String, 
+            message: String, 
             date: Date 
         }
     ],
     phoneNumber: number
-})
+},{timestamps:true})
 
-module.exports = mongoose.model('user', userSchema);
+module.exports = User= mongoose.model('user', userSchema);
