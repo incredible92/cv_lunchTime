@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const User = require('./models/user')
+const Order = require('./models/order')
 const router = express.Router();
 
 const {WebClient} = require('@slack/web-api');
@@ -62,12 +64,34 @@ mongoose.connect(
 
 
 slackEvents.on('app_mention', (e) => {
-    console.log(e)
-    console.log(`Got message from villagers ${e.user}: ${e.text}`);
+    console.log(`Got message from villager ${e.user}: ${e.text}`);
     (async () => {
       try {
-          const username =await slackClient.users.info({user:e.user})
-          console.log({username})
+          const { user } =await slackClient.users.info({user:e.user})
+          console.log(user)
+          const userExist = User.findOne({userId:e.user})
+          if(!userExist){
+              const newUser = new User({
+                  userInfo:{
+                    userId:e.user,
+                    username:user.name
+                  },
+
+              })
+              const newSavedUser = await newUser.save()
+
+              const newOrder= await new Order({
+                order:e.text,
+                userId:newSavedUser._id
+              }).save()
+          }
+          else{
+            const newOrder = new Order({
+              order:e.text,
+              userId:userExist._id
+            })
+            await newOrder.save()
+          }
          await slackClient.chat.postMessage({ channel: e.channel, text: `your order received!<@${e.user}>!`});
          
         } catch (error) {

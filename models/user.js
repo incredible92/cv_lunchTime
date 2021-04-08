@@ -1,16 +1,16 @@
 const mongoose = require('mongoose')
 
+const userInfoType = {
+    type:String,
+    required:true
+}
+
 const userSchema = new mongoose.Schema({
-    username: {
-        type:string, 
-        unique: true
+    userInfo: {
+        userId:userInfoType,
+        username:userInfoType
     },
-    email: "string",
-    order:   String,
-    date: { 
-        type: Date,
-        default: Date.now 
-        },
+    email: String,
     comments: [
         { 
             message: String, 
@@ -20,4 +20,4 @@ const userSchema = new mongoose.Schema({
     phoneNumber: number
 },{timestamps:true})
 
-module.exports = User= mongoose.model('user', userSchema);
+module.exports = mongoose.model('User', userSchema);
