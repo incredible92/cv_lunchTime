@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const router = express.Router();
 
 const {WebClient} = require('@slack/web-api');
+
 // const {MongoClient} = require('mongodb')
 const {createEventAdapter} = require('@slack/events-api');
 
@@ -18,7 +19,6 @@ const slackSigningSecret = process.env.SLACK_SIGNING_SECRET;
 const botToken = process.env.BOT_TOKEN;
 const slackEvents = createEventAdapter(slackSigningSecret);
 const slackClient = new WebClient(botToken);
-
 
 // const dbClient = new MongoClient(uri, { useNewUrlParser: true })
 // .then(() => {
@@ -62,12 +62,16 @@ mongoose.connect(
 
 
 slackEvents.on('app_mention', (e) => {
+    console.log(e)
     console.log(`Got message from villagers ${e.user}: ${e.text}`);
-    
     (async () => {
-        try {
+      try {
+          const username =await slackClient.users.info({user:e.user})
+          console.log({username})
          await slackClient.chat.postMessage({ channel: e.channel, text: `your order received!<@${e.user}>!`});
+         
         } catch (error) {
+          
             console.log(error.data);
         }
     })();
