@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
             date: Date 
         }
     ],
-    phoneNumber: number
+    phoneNumber: Number
 },{timestamps:true})
 
 module.exports = mongoose.model('User', userSchema);
