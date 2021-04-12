@@ -57,10 +57,7 @@ mongoose.connect(
       console.log("MongoDB connection established");
     }
   );
-//   const connection = mongoose.connection;
-// connection.once("open", function() {
-//     console.log("MongoDB database connection established successfully");
-//   });
+
 
 
 slackEvents.on('app_mention', (e) => {
@@ -76,22 +73,22 @@ slackEvents.on('app_mention', (e) => {
           if(!userExist){
               const newUser = new User({
                   userInfo:{
-                    userId:e.user,
-                    username:user.name
+                    userId: e.user,
+                    username: user.name
                   },
 
               })
               const newSavedUser = await newUser.save()
 
               const newOrder= await new Order({
-                order:message,
-                userId:newSavedUser._id
+                order: message,
+                userId: newSavedUser._id
               }).save()
           }
           else{
             const newOrder = new Order({
-              order:message,
-              userId:userExist._id
+              order: message,
+              userId: userExist._id
             })
             await newOrder.save()
           }
@@ -99,7 +96,7 @@ slackEvents.on('app_mention', (e) => {
          
         } catch (error) {
           
-            console.log(error.data);
+            console.log(error);
         }
     })();
 })
