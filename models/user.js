@@ -11,12 +11,6 @@ const userSchema = new mongoose.Schema({
         username:userInfoType
     },
     email: String,
-    comments: [
-        { 
-            message: String, 
-            date: Date 
-        }
-    ],
     phoneNumber: Number
 },{timestamps:true})
 

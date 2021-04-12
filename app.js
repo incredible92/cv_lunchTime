@@ -61,15 +61,12 @@ mongoose.connect(
 
 
 slackEvents.on('app_mention', (e) => {
+    
     console.log(`Got message from villager ${e.user}: ${e.text}`);
-    const message = (e.text).split(' ').slice(1).join(' ')
-    console.log({message})
     (async () => {
       try {
           const { user } =await slackClient.users.info({user:e.user})
-          console.log('passed here')
           console.log(user)
-          console.log('reached here')
           const userExist = await User.findOne({'userInfo.userId':e.user})
           console.log({userExist})
           if(!userExist){
@@ -83,13 +80,13 @@ slackEvents.on('app_mention', (e) => {
               const newSavedUser = await newUser.save()
 
               const newOrder= await new Order({
-                order: message,
+                order: e.text,
                 userId: newSavedUser._id
               }).save()
           }
           else{
             const newOrder = new Order({
-              order: message,
+              order: e.text,
               userId: userExist._id
             })
             await newOrder.save()
