@@ -62,7 +62,8 @@ mongoose.connect(
 
 slackEvents.on('app_mention', (e) => {
     console.log(`Got message from villager ${e.user}: ${e.text}`);
-    
+    const message = (e.text).split(' ').slice(1).join(' ')
+    console.log({message})
     (async () => {
       try {
           const { user } =await slackClient.users.info({user:e.user})
