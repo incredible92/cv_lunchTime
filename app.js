@@ -68,7 +68,6 @@ slackEvents.on('app_mention', (e) => {
 
       try {
           const { user } =await slackClient.users.info({user:e.user})
-          console.log(user)
           const userExist = await User.findOne({'userInfo.userId':e.user})
           console.log({userExist})
           if(!userExist){
