@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const User = require('./models/user')
 const Order = require('./models/order')
 const router = express.Router();
+const fetch = require('node-fetch');
 
 const {WebClient} = require('@slack/web-api');
 
@@ -44,6 +45,12 @@ app.use("/users", router);
 app.get('/', (req, res) => {
   res.send('place your order NOW!!!')
 });
+
+
+fetch('https://cvlunchtime.herokuapp.com/')
+    .then(res => res.text())
+    .then(text => console.log(text));
+
 
 mongoose.connect(
     process.env.MONGODB_CONNECTION_STRING,

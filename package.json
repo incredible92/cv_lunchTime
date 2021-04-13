@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app",
-    "dev":"nodemon app"
+    "dev": "nodemon app"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "express": "^4.17.1",
     "mongodb": "^3.6.5",
     "mongoose": "^5.12.3",
+    "node-fetch": "^2.6.1",
     "nodemon": "^2.0.7",
     "slackbots": "^1.2.0"
   }
