@@ -49,7 +49,7 @@ app.get('/', (req, res) => {
 
 app.get('/order', async(req,res) => {
   try {
-    const orders= await Order.find({})
+    const orders= await Order.find({}).populate('userId')
     res.json(orders)
     
   } catch (error) {
