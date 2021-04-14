@@ -47,9 +47,15 @@ app.get('/', (req, res) => {
 });
 
 
-fetch('https://cvlunchtime.herokuapp.com/')
-    .then(res => res.text())
-    .then(text => console.log(text));
+app.get('/order', async(req,res) => {
+  try {
+    const orders= await Order.find({})
+    res.json(orders)
+    
+  } catch (error) {
+    console.log(error);
+  }
+})
 
 
 mongoose.connect(
